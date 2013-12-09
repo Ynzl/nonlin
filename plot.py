@@ -13,6 +13,8 @@ def call(*args, **kwargs):
         ['env'] + ['%s=%s'%(k,str(v)) for k,v in kwargs.items()] + list(args)
     ).decode('utf-8')
 
+os.makedirs('graph')
+
 for dt,eps in product((0.1,0.01,0.001), (0,0.1,5)):
     print("dt=%f, eps=%f" % (dt,eps))
     euler = call('bin/euler', dt=dt, eps=eps, p0=0.1)
@@ -31,6 +33,5 @@ for dt,eps in product((0.1,0.01,0.001), (0,0.1,5)):
     axes.plot(rk4[:,0], rk4[:,2], label=r'$\dot{x}_{\mathrm{rk4}}$')
 
     axes.legend(loc='lower left')
-
-    figure.savefig("dt=%f_eps=%f.png"%(dt,eps))
+    figure.savefig("graph/time-evolution_dt=%s_eps=%s.png"%(dt,eps))
 
