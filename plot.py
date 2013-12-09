@@ -35,3 +35,11 @@ for dt,eps in product((0.1,0.01,0.001), (0,0.1,5)):
     axes.legend(loc='lower left')
     figure.savefig("graph/time-evolution_dt=%s_eps=%s.png"%(dt,eps))
 
+    # phase portrait:
+    figure = plt.figure()
+    axes = figure.add_subplot(111)
+    figure.suptitle(r'Phase portrait for $\Delta t=%s$, $\epsilon=%s$' % (dt, eps))
+    axes.plot(rk4[:,1], rk4[:,2], label=r'$x_\mathrm{eul}$')
+    figure.savefig("graph/phase-portrait_dt=%s_eps=%s.png"%(dt,eps))
+
+
