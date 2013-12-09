@@ -1,7 +1,9 @@
-all: euler rk4
+all: bin/euler bin/rk4
 
-euler: integrate.cpp integrate.h io.h
-	g++ -std=c++11 $< -o $@ -DINTEGRATION_SCHEME=euler
+clean:
+	rm -rf bin/*
 
-rk4: integrate.cpp integrate.h io.h
-	g++ -std=c++11 $< -o $@ -DINTEGRATION_SCHEME=rk4
+bin/%: src/integrate.cpp src/integrate.h src/io.h
+	@mkdir -p bin
+	g++ -std=c++11 $< -o $@ -DINTEGRATION_SCHEME=$*
+
