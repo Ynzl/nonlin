@@ -13,7 +13,10 @@ def call(*args, **kwargs):
         ['env'] + ['%s=%s'%(k,str(v)) for k,v in kwargs.items()] + list(args)
     ).decode('utf-8')
 
-os.makedirs('graph')
+try:
+    os.makedirs('graph')
+except IOError:
+    pass
 
 for dt,eps in product((0.1,0.01,0.001), (0,0.1,5)):
     print("dt=%s, eps=%s" % (dt,eps))
