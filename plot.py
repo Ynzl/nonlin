@@ -15,7 +15,7 @@ def call(*args, **kwargs):
 
 try:
     os.makedirs('graph')
-except IOError:
+except OSError:
     pass
 
 for dt,eps in product((0.1,0.01,0.001), (0,0.1,5)):
