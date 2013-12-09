@@ -16,7 +16,7 @@ def call(*args, **kwargs):
 for dt,eps in product((0.1,0.01,0.001), (0,0.1,5)):
     print("dt=%f, eps=%f" % (dt,eps))
     euler = call('bin/euler', dt=dt, eps=eps, p0=0.1)
-    rk4 = call('bin/euler', dt=dt, eps=eps, p0=0.1)
+    rk4 = call('bin/rk4', dt=dt, eps=eps, p0=0.1)
     euler = np.loadtxt(StringIO(euler))
     rk4 = np.loadtxt(StringIO(rk4))
 
