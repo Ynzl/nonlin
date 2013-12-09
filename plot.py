@@ -20,8 +20,8 @@ except IOError:
 
 for dt,eps in product((0.1,0.01,0.001), (0,0.1,5)):
     print("dt=%s, eps=%s" % (dt,eps))
-    euler = call('bin/euler', dt=dt, eps=eps, p0=0.1, tf=150)
-    rk4 = call('bin/rk4', dt=dt, eps=eps, p0=0.1, tf=150)
+    euler = call('bin/euler', dt=dt, eps=eps, p0=0.1, tf=20)
+    rk4 = call('bin/rk4', dt=dt, eps=eps, p0=0.1, tf=20)
     euler = np.loadtxt(StringIO(euler))
     rk4 = np.loadtxt(StringIO(rk4))
 
