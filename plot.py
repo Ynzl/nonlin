@@ -46,8 +46,8 @@ for dt,eps in product((0.1,0.01,0.001), (0,0.1,5)):
     figure = plt.figure()
     axes = figure.add_subplot(111)
     figure.suptitle(r'$\Delta t=%s$, $\epsilon=%s$' % (dt, eps))
-    err_eul = abs(eul[:-1,1] - octave[:,0]) / octave[:,0]
-    err_rk4 = abs(rk4[:-1,1] - octave[:,0]) / octave[:,0]
+    err_eul = abs(eul[:-1,1] - octave[:,0])
+    err_rk4 = abs(rk4[:-1,1] - octave[:,0])
     axes.plot(eul[:-1,0], err_eul, label=r'$\mathrm{err}_\mathrm{eul}$')
     axes.plot(eul[:-1,0], err_rk4, label=r'$\mathrm{err}_\mathrm{rk4}$')
     axes.legend(loc='lower left')
