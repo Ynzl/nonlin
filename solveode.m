@@ -1,11 +1,9 @@
-function x = solveode(e)
+function x = solveode(eps, dt=0.1, tmax=30)
+    xinit = [0, 0.1];
+    t = linspace(0, tmax, tmax / dt);
 
-xdot = @(x,t,e)[x(2),e*(1-x(1)*x(1))*x(2) - x(1)];
+    xdot = @(x,t) [x(2), eps * (1 - x(1)**2) * x(2) - x(1)];
 
-xinit = [0, 0.1];
-t = linspace(0, 50, 100);
-
-g = @(x,t) xdot(x,t,e);
-
-x = lsode(g, xinit, t);
-plot(t,x);
+    x = lsode(xdot, xinit, t);
+    plot(t,x);
+endfunction
