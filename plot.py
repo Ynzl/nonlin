@@ -26,7 +26,7 @@ for dt,eps in product((0.1,0.01,0.001), (0,0.1,5)):
     params = dict(dt=dt, eps=eps, p0=0.1, tf=20)
     eul = numprog('bin/euler', **params)
     rk4 = numprog('bin/rk4', **params)
-    octave = numprog('octave', '-q', 'solve.m', **params)
+    octave = numprog('octave', '-q', 'vandersolve.m', **params)
 
     # plot x(t), p(t)
     figure = plt.figure()

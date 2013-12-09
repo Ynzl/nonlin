@@ -1,4 +1,4 @@
-function x = solveode(x0, p0, eps, dt=0.1, tmax=30)
+function x = vanderpol(x0, p0, eps, dt=0.1, tmax=30)
     xinit = [x0, p0];
     t = linspace(0, tmax, tmax / dt);
 
