@@ -6,4 +6,5 @@ function x = glycolysis(x0, y0, a, b, dt=0.1, tmax=30)
                    -a*x(2) - x(2)*x(1)**2 + b];
 
     x = lsode(xdot, xinit, t);
+    plot(t,x)
 endfunction

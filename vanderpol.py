@@ -21,12 +21,13 @@ try:
 except OSError:
     pass
 
-for dt,eps in product((0.1,0.01,0.001), (0,0.1,5)):
+for dt,(eps,tf) in product((0.1,0.01,0.001), ((0,30),(0.1,100),(5,30))):
     print("dt=%s, eps=%s" % (dt,eps))
-    params = dict(dt=dt, eps=eps, p0=0.1, tf=20)
+    params = dict(dt=dt, eps=eps, p0=0.1, tf=tf)
     eul = numprog('bin/euler', **params)
     rk4 = numprog('bin/rk4', **params)
     octave = numprog('octave', '-q', 'vandersolve.m', **params)
+    m = min(len(eul), len(rk4), len(octave))
 
     # plot x(t), p(t)
     figure = plt.figure()
@@ -41,15 +42,27 @@ for dt,eps in product((0.1,0.01,0.001), (0,0.1,5)):
     axes.legend(loc='lower left')
     figure.savefig("graph/time-evolution_dt=%s_eps=%s.png"%(dt,eps))
     plt.close()
+    
+    figure = plt.figure()
+    axes = figure.add_subplot(111)
+    figure.suptitle(r'$\Delta t=%s$, $\epsilon=%s$' % (dt, eps))
+
+    axes.plot(eul[:m,0], octave[:,0], label=r'$x_\mathrm{lsode}$')
+    axes.plot(eul[:m,0], octave[:,1], label=r'$\dot{x}_\mathrm{lsode}$')
+
+    axes.legend(loc='lower left')
+    figure.savefig("graph/time-evolution-lsode_dt=%s_eps=%s.png"%(dt,eps))
+    plt.close()
+
 
     # error plot:
     figure = plt.figure()
     axes = figure.add_subplot(111)
     figure.suptitle(r'$\Delta t=%s$, $\epsilon=%s$' % (dt, eps))
-    err_eul = abs(eul[:-1,1] - octave[:,0])
-    err_rk4 = abs(rk4[:-1,1] - octave[:,0])
-    axes.plot(eul[:-1,0], err_eul, label=r'$\mathrm{err}_\mathrm{eul}$')
-    axes.plot(eul[:-1,0], err_rk4, label=r'$\mathrm{err}_\mathrm{rk4}$')
+    err_eul = abs(eul[:m,1] - octave[:m,0])
+    err_rk4 = abs(rk4[:m,1] - octave[:m,0])
+    axes.plot(eul[:m,0], err_eul, label=r'$\mathrm{err}_\mathrm{eul}$')
+    axes.plot(eul[:m,0], err_rk4, label=r'$\mathrm{err}_\mathrm{rk4}$')
     axes.legend(loc='lower left')
     figure.savefig("graph/error_dt=%s_eps=%s.png"%(dt,eps))
     plt.close()
